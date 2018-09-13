@@ -2,9 +2,7 @@ import React, { Component } from "react";
 
 import { connect } from "react-redux";
 
-import { selectProfile, requestRepos, receiveRepos } from "../actions/";
-
-import api from "../api";
+import { selectProfile, requestRepos } from "../actions/";
 
 import RepoList from "../components/RepoList";
 
@@ -21,10 +19,6 @@ class App extends Component {
   componentDidMount() {
     const { dispatch, selected } = this.props;
     dispatch(requestRepos(selected));
-
-    api
-      .get(selected)
-      .then(response => dispatch(receiveRepos(selected, response)));
   }
 
   handleChange({ target: { value } }) {
@@ -69,10 +63,6 @@ const mapDispatchToProps = dispatch => {
     onSetSelected: profile => {
       dispatch(selectProfile(profile));
       dispatch(requestRepos(profile));
-
-      api
-        .get(profile)
-        .then(response => dispatch(receiveRepos(profile, response)));
     }
   };
 };
